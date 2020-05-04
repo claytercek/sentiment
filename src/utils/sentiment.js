@@ -8,9 +8,38 @@ export const analyzeStatus = (status) => {
 
 
 export const analyzeStatuses = (statuses) => {
-  let sentiments = [];
+  let sentiments = {};
+  let max = 0;
+  let min = 0;
   for (let status of statuses) {
-    sentiments.push(analyzeStatus(status))
+    let analyzed = analyzeStatus(status);
+
+    // check if no words could be found
+    if (analyzed.words.length == 0) {
+      continue;
+    }
+
+    if (analyzed.score < min) {
+      min = analyzed.score;
+    }
+    if (analyzed.score > max) {
+      max = analyzed.score;
+    }
+
+    if (!sentiments[analyzed.score]) {
+      sentiments[analyzed.score] = {
+        tweets: [status],
+        val: analyzed.score
+      }
+    } else {
+      sentiments[analyzed.score].tweets.push(status)
+    }
   }
-  return sentiments;
+  return {
+    groups: Object.values(sentiments),
+    range: {
+      max,
+      min
+    }
+  }
 }

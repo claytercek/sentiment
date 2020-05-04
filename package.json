@@ -12,6 +12,7 @@
     "test": "run-p --race dev cy:run"
   },
   "dependencies": {
+    "chroma-js": "^2.1.0",
     "compression": "^1.7.1",
     "dotenv-extended": "^2.8.0",
     "express": "^4.17.1",

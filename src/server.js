@@ -1,7 +1,4 @@
-
-import _ from './server/env';
-import twitter from './server/twitter';
-
+import _ from './utils/env';
 import sirv from 'sirv';
 import express from 'express';
 import compression from 'compression';
@@ -12,6 +9,7 @@ const dev = NODE_ENV === 'development';
 
 express()
 	.use(
+		express.json(),
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),
 		sapper.middleware()

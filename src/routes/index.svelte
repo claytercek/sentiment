@@ -12,6 +12,7 @@
 
 		list-style-type: none;
 		padding: 0;
+		height: 100%;
 	}
 	
 </style>

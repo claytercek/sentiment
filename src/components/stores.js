@@ -30,6 +30,26 @@ export const colors = derived(
   }
 );
 
+export const percentNegative = derived(
+	data,
+	$data => {
+    let count = 0;
+    
+    for (let group of $data.groups) {
+      if (group.val < 0) {
+        count += group.tweets.length
+      }
+
+      if (group.val == 0) {
+        count += group.tweets.length / 2
+        break;
+      }
+    }
+
+    return (count / $data.totalCount) * 100;
+  }
+);
+
 
 export const fetchData = (q) => {
   data.set(initialData);

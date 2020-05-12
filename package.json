@@ -1,6 +1,6 @@
 {
-  "name": "TODO",
-  "description": "TODO",
+  "name": "sentiment",
+  "description": "twitter sentiment analysis",
   "version": "0.0.1",
   "scripts": {
     "dev": "sapper dev",

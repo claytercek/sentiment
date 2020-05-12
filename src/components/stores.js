@@ -3,18 +3,20 @@ import chroma from "chroma-js";
 
 export const query = writable("");
 
-export const data = writable({
+const initialData = {
   groups: [],
   range: {
     min: 0,
     max: 0
-  }
-});
+  },
+  totalCount: 0
+}
+
+export const data = writable(initialData);
 
 export const colors = derived(
 	data,
 	$data => {
-    console.log("doin the thing now")
     let maxVal = Math.max($data.range.min * -1, $data.range.max);
     let colors = chroma.scale(['#d73027', "#ffffbf", '#4575b4'])
     .mode('lch').colors(1 + 2 * maxVal);
@@ -30,6 +32,7 @@ export const colors = derived(
 
 
 export const fetchData = (q) => {
+  data.set(initialData);
   return fetch('/api/query', {
     method: 'POST',
     body: JSON.stringify({

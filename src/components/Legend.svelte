@@ -6,8 +6,8 @@
 
 <style lang="scss">
 
-  $dist: 8px;
-  $lineOffset: 14px;
+  $dist: 12px;
+  $lineOffset: 18px;
 
 	.legend {
 		position: absolute;

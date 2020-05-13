@@ -21,8 +21,8 @@
     var listen = /^[A-z0-9]+$/i;
     var key = String.fromCharCode( event.keyCode );
     if (key.match(listen)) {
+      query.set("");
       ref.focus();
-      query.set(key);
       hideData.set(true);
     }
   }
@@ -31,14 +31,14 @@
 <style type="scss">
 </style>
 
-<svelte:window on:keyup={focusInput}/>
+<svelte:window on:keydown={focusInput}/>
 
 <input 
   bind:value={$query} 
-  type="text" 
   name="query" 
   id="query" 
   placeholder="hashtag"
   bind:this={ref}
   on:keyup|preventDefault={handleSubmit}
-  on:input={handleChange}>
+  on:input={handleChange}
+  type="search">

@@ -1,5 +1,5 @@
 <script>
-	import { data } from "./stores"; 
+	import { data, hideData } from "./stores"; 
 	import { quartInOut, cubicIn, quartOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
 	import { colors } from "./stores";
@@ -42,9 +42,15 @@
       css: (t) => {
 				const easedOffAxis = cubicIn(t);
 				if (innerWidth < innerHeight) { //portrait
-					return `transform: scaleX(${easedOffAxis});`
+					return `
+						transform: scaleX(${easedOffAxis});
+						transform-origin: 50% 100%;
+					`
 				} else { // landscape
-					return `transform: scaleY(${easedOffAxis});`
+					return `
+						transform: scaleY(${easedOffAxis});
+						transform-origin: 50% 100%;
+					`
 				}
       }
     };
@@ -85,18 +91,20 @@
 <svelte:window bind:innerWidth={innerWidth} bind:innerHeight={innerHeight}/>
 
 <div>
-	<ul class="col-wrapper">
-		{#each [...$data.groups] as col, i (col.val)}
-			<li 
-				style={`
-					background-color:${$colors[col.val]};
-					${innerWidth < innerHeight ? "height" : "width"}: ${(col.tweets.length / $data.totalCount) * 100}%;
-				`}
-				in:grow="{{delay: i * 50}}"
-				out:shrink="{{delay: i * 20}}"
-				data-percent={(col.tweets.length / $data.totalCount)}
-			/>
-		{/each}
-	</ul>
+	{#if !$hideData}
+		<ul class="col-wrapper">
+			{#each [...$data.groups] as col, i (col.val)}
+				<li 
+					style={`
+						background-color:${$colors[col.val]};
+						${innerWidth < innerHeight ? "height" : "width"}: ${(col.tweets.length / $data.totalCount) * 100}%;
+					`}
+					in:grow="{{delay: i * 50}}"
+					out:shrink="{{delay: i * 20}}"
+					data-percent={(col.tweets.length / $data.totalCount)}
+				/>
+			{/each}
+		</ul>
+	{/if}
 	<Legend />
 </div>

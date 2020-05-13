@@ -45,18 +45,17 @@ export const percentNegative = derived(
         break;
       }
     }
-
     return (count / $data.totalCount) * 100;
   }
 );
 
 
-export const showLegend = writable(false);
+export const hideData = writable(true);
 
 
 export const fetchData = (q) => {
   data.set(initialData);
-  showLegend.set(false);
+  hideData.set(true);
   return fetch('/api/query', {
     method: 'POST',
     body: JSON.stringify({
@@ -70,6 +69,6 @@ export const fetchData = (q) => {
   .then(response => response.json())
   .then(json => {
     data.set(json)
-    showLegend.set(true);
+    hideData.set(false);
   });
 }

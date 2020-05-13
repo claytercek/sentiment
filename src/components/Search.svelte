@@ -29,6 +29,9 @@
 </script>
 
 <style type="scss">
+  input {
+    font-family: $font-stack;
+  }
 </style>
 
 <svelte:window on:keydown={focusInput}/>

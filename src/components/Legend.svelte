@@ -7,7 +7,7 @@
 <style lang="scss">
 
   $dist: 12px;
-  $lineOffset: 18px;
+  $lineOffset: 20px;
 
 	.legend {
 		position: absolute;
@@ -47,7 +47,7 @@
       width: 30px;
 
       &::before {
-        left: $lineOffset;
+        left: $lineOffset - 3px;
         height: auto;
         top: 0;
         right: auto;
@@ -80,6 +80,7 @@
       padding: 0 10px;
       padding-top: 30px;
       transition: padding-top 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+      font-weight: 600;
       
       @include portrait {
         top: 0;

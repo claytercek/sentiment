@@ -114,5 +114,5 @@
 			<p class="no-data">Not enough data available for "{$query}"</p>
 		{/if}
 	{/if}
-	<Legend />
+	<Legend portrait={innerWidth < innerHeight}/>
 </div>

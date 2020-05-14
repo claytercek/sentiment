@@ -20,7 +20,6 @@
 
     var listen = /^[A-Za-z0-9]+$/i;
     var key = String.fromCharCode( event.keyCode );
-    console.log(key);
     if (key.match(listen)) {
       query.set("");
       ref.focus();
@@ -49,6 +48,7 @@
     background-color: transparent;
     resize:none;
     width: 100%;
+    height: 70vh;
 
     &::placeholder {
       opacity: 0.6;

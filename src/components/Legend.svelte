@@ -1,7 +1,28 @@
 <script>
   import { percentNegative, hideData, data } from "./stores"; 
-	import { quartInOut } from 'svelte/easing';
-  
+	import { quartInOut, cubicIn, cubicInOut } from 'svelte/easing';
+  export let portrait;
+  let w, h;
+
+  $: showNegative = 90 < ($percentNegative / 100) *  (portrait ? h : w);
+  $: showPositive = 90 < (1 - ($percentNegative / 100)) *  ( portrait ? h : w);
+  $: display = !$hideData && $data.totalCount > 3;
+
+  function slideIn(node, { delay = 0, duration = 600 }) {
+    return {
+      delay,
+      duration,
+      css: (t, u) => {
+				const easedOffAxis = cubicInOut(u);
+				if (portrait) {
+          return `padding-left: ${30 * easedOffAxis}px;`
+				} else { // landscape
+					return `padding-top: ${30 * easedOffAxis}px;`
+				}
+      }
+    };
+  }
+
 </script>
 
 <style lang="scss">
@@ -63,37 +84,23 @@
       }
     }
 
-    &.showLegend p {
-      padding-top: 0;
-
-      @include portrait {
-        padding-top: 10px;
-        padding-left: 0;
-      }
-    }
-
 		p {
 			position: absolute;
 			top: $dist;
       left: 0;
       background-color: white;
       padding: 0 10px;
-      padding-top: 30px;
-      transition: padding-top 0.6s cubic-bezier(0.77, 0, 0.175, 1);
       font-weight: 500;
       
       @include portrait {
         top: 0;
         padding: 10px 0;
-        padding-left: 30px;
         left: $dist;
-        transition: padding-left 0.6s cubic-bezier(0.77, 0, 0.175, 1);
       }
 
 			&#positive {
 				right: 0;
         left: auto;
-        transition-delay: 0.3s;
 
         @include portrait {
           right: auto;
@@ -106,7 +113,6 @@
       &#neutral {
         transform: translateX(-50%);
         left: var(--offset);
-        transition-delay: 0.15s;
 
         @include portrait {
           top: var(--offset);
@@ -119,8 +125,14 @@
 	
 </style>
 
-<div class="legend" class:showLegend={!$hideData && $data.totalCount > 3}>
-	<p id="negative">negative</p>
-	<p id="neutral" style="--offset: {$percentNegative}%">neutral</p>
-	<p id="positive">positive</p>
+<div class="legend" class:showLegend={display} bind:clientWidth={w} bind:clientHeight={h}>
+  {#if display}
+    {#if showNegative}
+      <p transition:slideIn id="negative">negative</p>
+    {/if}
+    <p transition:slideIn="{{delay: 150}}" id="neutral" style="--offset: {$percentNegative}%">neutral</p>
+    {#if showPositive}
+      <p transition:slideIn="{{delay: 300}}" id="positive">positive</p>
+    {/if}
+  {/if}
 </div>

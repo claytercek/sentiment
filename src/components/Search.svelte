@@ -49,6 +49,8 @@
     resize:none;
     width: 100%;
     height: 70vh;
+    padding: 0;
+    margin: 0;
 
     &::placeholder {
       opacity: 0.6;

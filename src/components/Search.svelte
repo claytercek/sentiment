@@ -37,8 +37,7 @@
     font-size: 10vw;
     font-weight: 600 !important;
     z-index: 100;
-    mix-blend-mode: overlay;
-  
+    color: $main-color;
   }
 
   textarea {
@@ -48,10 +47,22 @@
     border: none;
     background-color: transparent;
     resize:none;
+    width: 100%;
+
+    &::placeholder {
+      opacity: 0.6;
+      color: inherit;
+    }
+    &:focus {
+      border: none;
+      box-shadow: none;
+      outline: none;
+    }
 
     &:invalid {
       border: none !important;
       box-shadow: none;
+      outline: none;
 
       ~ span {
         display: block;
@@ -88,8 +99,13 @@
     on:input={handleChange}
     minlength="1"
     type="search"
-    required />
+    enterkeyhint="go"
+    required
+    autocomplete="off" 
+    autocorrect="off" 
+    autocapitalize="off" 
+    spellcheck="false" />
 
   <span>or "#hashtag"</span>
-  <span>or "@username</span>
+  <span>or "@username"</span>
 </div>

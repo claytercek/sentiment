@@ -1,5 +1,5 @@
 <script>
-  import { percentNegative, hideData } from "./stores"; 
+  import { percentNegative, hideData, data } from "./stores"; 
 	import { quartInOut } from 'svelte/easing';
   
 </script>
@@ -119,7 +119,7 @@
 	
 </style>
 
-<div class="legend" class:showLegend={!$hideData}>
+<div class="legend" class:showLegend={!$hideData && $data.totalCount > 3}>
 	<p id="negative">negative</p>
 	<p id="neutral" style="--offset: {$percentNegative}%">neutral</p>
 	<p id="positive">positive</p>

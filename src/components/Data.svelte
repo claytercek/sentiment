@@ -1,5 +1,5 @@
 <script>
-	import { data, hideData } from "./stores"; 
+	import { data, hideData, query } from "./stores"; 
 	import { quartInOut, cubicIn, quartOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
 	import { colors } from "./stores";
@@ -86,25 +86,33 @@
 			height: 100%;
 		}
 	}
+
+	.no-data {
+		@include centered();
+	}
 </style>
 
 <svelte:window bind:innerWidth={innerWidth} bind:innerHeight={innerHeight}/>
 
 <div>
 	{#if !$hideData}
-		<ul class="col-wrapper">
-			{#each [...$data.groups] as col, i (col.val)}
-				<li 
-					style={`
-						background-color:${$colors[col.val]};
-						${innerWidth < innerHeight ? "height" : "width"}: ${(col.tweets.length / $data.totalCount) * 100}%;
-					`}
-					in:grow="{{delay: i * 50}}"
-					out:shrink="{{delay: i * 20}}"
-					data-percent={(col.tweets.length / $data.totalCount)}
-				/>
-			{/each}
-		</ul>
+		{#if $data.totalCount > 3}
+			<ul class="col-wrapper">
+				{#each [...$data.groups] as col, i (col.val)}
+					<li 
+						style={`
+							background-color:${$colors[col.val]};
+							${innerWidth < innerHeight ? "height" : "width"}: ${(col.tweets.length / $data.totalCount) * 100}%;
+						`}
+						in:grow="{{delay: i * 50}}"
+						out:shrink="{{delay: i * 20}}"
+						data-percent={(col.tweets.length / $data.totalCount)}
+					/>
+				{/each}
+			</ul>
+		{:else}
+			<p class="no-data">Not enough data available for "{$query}"</p>
+		{/if}
 	{/if}
 	<Legend />
 </div>

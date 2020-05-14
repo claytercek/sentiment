@@ -18,8 +18,9 @@
     if (ref == document.activeElement) 
       return;
 
-    var listen = /^[A-z0-9]+$/i;
+    var listen = /^[A-Za-z0-9]+$/i;
     var key = String.fromCharCode( event.keyCode );
+    console.log(key);
     if (key.match(listen)) {
       query.set("");
       ref.focus();

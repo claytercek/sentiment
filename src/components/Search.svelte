@@ -29,30 +29,67 @@
 </script>
 
 <style type="scss">
-  textarea {
-    font-family: $font-stack;
-    border: none;
+  div {
     position: fixed;
-    max-width: 80vw;
+    max-width: 75vw;
     top: 2vw;
     left: 6vw;
     font-size: 10vw;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     z-index: 100;
-    background-color: transparent;
     mix-blend-mode: overlay;
+  
+  }
+
+  textarea {
+    font-size: inherit;
+    font-family: $font-stack;
+    font-weight: inherit;
+    border: none;
+    background-color: transparent;
     resize:none;
+
+    &:invalid {
+      border: none !important;
+      box-shadow: none;
+
+      ~ span {
+        display: block;
+      }
+    }
+  }
+
+  span {
+    position: absolute;
+    display: none;
+
+    &:nth-of-type(1) {
+      top: 1.6em;
+      opacity: 0.5;
+    }
+    
+    &:nth-of-type(2) {
+      top: 2.8em;
+      opacity: 0.35;
+    }
   }
 </style>
 
 <svelte:window on:keydown={focusInput}/>
 
-<textarea 
-  bind:value={$query} 
-  name="query" 
-  id="query" 
-  placeholder="hashtag"
-  bind:this={ref}
-  on:keydown={handleSubmit}
-  on:input={handleChange}
-  type="search" />
+<div>
+  <textarea 
+    bind:value={$query} 
+    name="query" 
+    id="query" 
+    placeholder='Type any phrase'
+    bind:this={ref}
+    on:keydown={handleSubmit}
+    on:input={handleChange}
+    minlength="1"
+    type="search"
+    required />
+
+  <span>or "#hashtag"</span>
+  <span>or "@username</span>
+</div>

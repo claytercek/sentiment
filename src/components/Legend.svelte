@@ -14,7 +14,7 @@
     left: 10vw;
     right: 10vw;
 		bottom: calc(10vw - 30px);
-		background-color: white;
+    background-color: white;
     height: 30px;
     color: $main-color;
     overflow: hidden;
@@ -80,7 +80,7 @@
       padding: 0 10px;
       padding-top: 30px;
       transition: padding-top 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-      font-weight: 600;
+      font-weight: 500;
       
       @include portrait {
         top: 0;
